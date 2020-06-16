@@ -1,37 +1,36 @@
-package entities;
+package dto;
 
-import java.io.Serializable;
+import entities.Recipe;
+import entities.WeekMenuPlan;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
 
+/**
+ *
+ * @author Nina
+ */
+public class WeekMenuPlanDTO {
 
-@Entity
-@NamedQuery(name = "WeekMenuPlan.deleteAllRows", query = "DELETE from WeekMenuPlan")
-public class WeekMenuPlan implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long menuId;
     private String weekNo;
     private String year;
-    
-    @ManyToMany(mappedBy = "weekMenuPlans")
     private List<Recipe> sevenRecipes = new ArrayList();
-    
-    public WeekMenuPlan() {
+
+    public WeekMenuPlanDTO() {
     }
 
-    public WeekMenuPlan(List<Recipe> sevenRecipes, String weekNo, String year) {
+    public WeekMenuPlanDTO(Long menuId, String weekNo, String year, List<Recipe> sevenRecipes) {
+        this.menuId = menuId;
         this.weekNo = weekNo;
         this.year = year;
         this.sevenRecipes = sevenRecipes;
+    }
+    
+    public WeekMenuPlanDTO(WeekMenuPlan wmp) {
+        this.menuId = wmp.getMenuId();
+        this.weekNo = wmp.getWeekNo();
+        this.year = wmp.getYear();
+        this.sevenRecipes = wmp.getSevenRecipes();
     }
 
     public Long getMenuId() {
@@ -66,5 +65,4 @@ public class WeekMenuPlan implements Serializable {
         this.sevenRecipes = sevenRecipes;
     }
 
-    
 }

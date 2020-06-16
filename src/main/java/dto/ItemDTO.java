@@ -1,47 +1,42 @@
-package entities;
+package dto;
 
-import java.io.Serializable;
+import entities.Ingredient;
+import entities.Item;
+import entities.Storage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
-
-@Entity
-@NamedQuery(name = "Item.deleteAllRows", query = "DELETE from Item")
-public class Item implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long itemId;
+/**
+ *
+ * @author Nina
+ */
+public class ItemDTO {
+    
+   private Long itemId;
     private String name;
     private String pricePrKg;
-    @OneToMany(mappedBy = "item")
     private List<Ingredient> ingredients = new ArrayList();
-    @ManyToOne
     private Storage storage;
-    
-    public Item() {
+
+    public ItemDTO() {
     }
 
-    public Item(String name, String pricePrKg) {
-        this.name = name;
-        this.pricePrKg = pricePrKg;
-    }
-
-    public Item(Long itemId, String name, String pricePrKg, Storage storage) {
+    public ItemDTO(Long itemId, String name, String pricePrKg, List<Ingredient> ingredients, Storage storage) {
         this.itemId = itemId;
         this.name = name;
         this.pricePrKg = pricePrKg;
+        this.ingredients = ingredients;
         this.storage = storage;
     }
-    
+
+    public ItemDTO(Item item) {
+        this.itemId = item.getItemId();
+        this.name = item.getName();
+        this.pricePrKg = item.getPricePrKg();
+        this.ingredients = item.getIngredients();
+        this.storage = item.getStorage();
+    }
+
     public Long getItemId() {
         return itemId;
     }
@@ -81,6 +76,4 @@ public class Item implements Serializable {
     public void setStorage(Storage storage) {
         this.storage = storage;
     }
-
-
 }

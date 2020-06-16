@@ -3,16 +3,22 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-@NamedQuery(name = "Recipe.deleteAllRows", query = "DELETE from Recipe")
+@NamedQueries({
+    @NamedQuery(name = "Recipe.deleteAllRows", query = "DELETE from Recipe"),
+    @NamedQuery(name = "Recipe.getAll", query = "SELECT r FROM Recipe r")
+})
+
 public class Recipe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +31,7 @@ public class Recipe implements Serializable {
     @ManyToMany
     private List<WeekMenuPlan> weekMenuPlans = new ArrayList();
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.PERSIST)
     private List<Ingredient> ingredients = new ArrayList();
 
     public Recipe() {
@@ -36,6 +42,12 @@ public class Recipe implements Serializable {
         this.directions = directions;
         this.ingredients = ingredients;
 
+    }
+     public Recipe(String preparationTime, String directions, List<Ingredient> ingredients, List<WeekMenuPlan> weekMenuPlans) {
+        this.preparationTime = preparationTime;
+        this.directions = directions;
+        this.ingredients = ingredients;
+        this.weekMenuPlans = weekMenuPlans;
     }
 
     public Long getRecipeId() {

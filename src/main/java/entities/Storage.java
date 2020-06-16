@@ -27,6 +27,10 @@ public class Storage implements Serializable {
     public Storage() {
     }
 
+    public Storage(String amount) {
+        this.amount = amount;
+    }
+
     public Storage(String amount, List<Item> items) {
         this.amount = amount;
         this.items = items;
