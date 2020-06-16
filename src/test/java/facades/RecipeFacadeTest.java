@@ -40,18 +40,6 @@ public class RecipeFacadeTest {
     }
 
 
-    /*   **** HINT **** 
-        A better way to handle configuration values, compared to the UNUSED example above, is to store those values
-        ONE COMMON place accessible from anywhere.
-        The file config.properties and the corresponding helper class utils.Settings is added just to do that. 
-        See below for how to use these files. This is our RECOMENDED strategy
-     */
-    //@BeforeAll
-    public static void setUpClassV2() {
-        emf = EMF_Creator.createEntityManagerFactory(DbSelector.TEST,
-                Strategy.DROP_AND_CREATE);
-        facade = RecipeFacade.getRecipeFacade(emf);
-    }
 
 //    @AfterAll
 //    public static void tearDownClass() {

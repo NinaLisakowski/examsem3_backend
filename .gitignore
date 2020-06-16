@@ -5,6 +5,9 @@
 ###SetupTestUserRemove###
 **/SetupTestUsers.java
 
+###SetupDummiesRemove###
+**/SetupDummies.java
+
 
 ### macOS ###
 # General
