@@ -1,13 +1,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
-
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQuery(name = "Recipe.deleteAllRows", query = "DELETE from Recipe")
@@ -17,19 +19,25 @@ public class Recipe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long recipeId;
-    private List<String> ingredient;
     private String preparationTime;
     private String directions;
-    
+
+    @ManyToMany
+    private List<WeekMenuPlan> weekMenuPlans = new ArrayList();
+
+    @OneToMany(mappedBy = "recipe")
+    private List<Ingredient> ingredients = new ArrayList();
+
     public Recipe() {
     }
 
-    public Recipe(List<String> ingredient, String preparationTime, String directions) {
-        this.ingredient = ingredient;
+    public Recipe(String preparationTime, String directions, List<Ingredient> ingredients) {
         this.preparationTime = preparationTime;
         this.directions = directions;
+        this.ingredients = ingredients;
+
     }
-    
+
     public Long getRecipeId() {
         return recipeId;
     }
@@ -38,12 +46,20 @@ public class Recipe implements Serializable {
         this.recipeId = recipeId;
     }
 
-    public List<String> getIngredient() {
-        return ingredient;
+    public List<WeekMenuPlan> getWeekMenuPlans() {
+        return weekMenuPlans;
     }
 
-    public void setIngredient(List<String> ingredient) {
-        this.ingredient = ingredient;
+    public void setWeekMenuPlans(List<WeekMenuPlan> weekMenuPlans) {
+        this.weekMenuPlans = weekMenuPlans;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getPreparationTime() {
@@ -61,5 +77,5 @@ public class Recipe implements Serializable {
     public void setDirections(String directions) {
         this.directions = directions;
     }
-    
+
 }

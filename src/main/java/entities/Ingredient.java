@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 
@@ -18,11 +19,18 @@ public class Ingredient implements Serializable {
     private Long item_id;
     private String amount;
     
+    @ManyToOne
+    private Recipe recipe;
+    
+    @ManyToOne
+    private Item item;
+    
     public Ingredient() {
     }
 
-    public Ingredient(String amount) {
+    public Ingredient(String amount, Item item) {
         this.amount = amount;
+        this.item = item;
     }
 
     public Long getItem_id() {
@@ -39,6 +47,14 @@ public class Ingredient implements Serializable {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     
